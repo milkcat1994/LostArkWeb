@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
     // getMari.getMari();
     // console.log(temp);
     getMari.getMari(req, res).then(function(result) {
-        console.log(result);
+        // console.log(result);
         res.json(result);
     });
     // console.dir(temp);
