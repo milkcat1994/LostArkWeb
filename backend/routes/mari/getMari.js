@@ -45,7 +45,7 @@ var getMari = {
 
         return new Promise(resolve => {
                 request(url, function(error, response, body) {
-                    const $ = cheerio.load(body);
+                    let $ = cheerio.load(body);
                     // const $ = cheerio.load(body);
                     let colArr = $("#listItems").children();
                     var stuffObj = new Object();
@@ -54,6 +54,7 @@ var getMari = {
                     //하나의 stuff당 이름을 붙여서 5개의 객체로 받기
                     // console.log(colArr[0].children[1].children[1].children[0]);
                     // console.log(colArr[0].children[1].children[1].children[0].attribs.src);
+                    console.dir(colArr);
                     for (let i = 0; i < colArr.length; i++) {
                         var temp = i;
                         // stuffName.push(colArr[i].$(".wrapper > .item-desc > .item-name").getText());
