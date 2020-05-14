@@ -7,16 +7,16 @@ var userInfo = require('./getUserInfo.js');
 //추후 DB사용시 해당 정보 DB에 저장하고 DB내용을 불러 올 것.
 
 //nav에서 수집형 포인트' 클릭시 가져올 정보
-router.get('/:id', function(req, res) {
+router.get('/:id', (req, res) => {
     // console.log('id받았음.>>' + req.params.id);
     console.log('id받음');
-    collect.getCollect(req, res).then(function(result) {
+    collect.getCollect(req, res).then((result) => {
         console.dir("collection>>>" + result);
         res.json(result);
     });
 });
 
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
     console.log('id안받음');
     userInfo.getUserInfo(req, res)
         .then((result) => {
@@ -25,7 +25,7 @@ router.get('/', function(req, res) {
                 resolve(collect.getCollect(result))
             })
         })
-        .then(function(result) {
+        .then((result) => {
             console.log("collection>>>" + result);
             console.dir(result);
             res.json(result);
