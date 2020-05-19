@@ -5,11 +5,20 @@ const path = require('path');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+// const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const mariRouter = require('./routes/mari/mari');
 const collectionRouter = require('./routes/collection/collection');
+
+// Connect To MongoDB Server
+// var db = mongoose.connection;
+// db.on('error', console.error);
+// db.once('open', function() {
+//     //connected to mongodb server
+//     console.log("Connected to mongod server");
+// });
 
 // var bootstrap = require('bottstrap');
 
@@ -18,7 +27,9 @@ var app = express();
 app.use(require('connect-history-api-fallback')());
 
 // bodyParser
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 // CORS 설정
 app.use(cors());
 

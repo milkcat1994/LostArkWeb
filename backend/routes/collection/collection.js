@@ -10,31 +10,41 @@ var userInfo = require('./getUserInfo.js');
 router.get('/:id', (req, res) => {
     // console.log('id받았음.>>' + req.params.id);
     console.log('id받음');
-    collect.getCollect(req, res).then((result) => {
-        console.dir("collection>>>" + result);
-        res.json(result);
-    });
-});
-
-router.get('/', (req, res) => {
-    console.log('id안받음');
     userInfo.getUserInfo(req, res)
         .then((result) => {
             return new Promise(resolve => {
-                console.log("getCollect>>>" + result);
+                console.log("getCollect1>>>" + result);
                 resolve(collect.getCollect(result))
             })
         })
         .then((result) => {
-            console.log("collection>>>" + result);
+            console.log("collection1>>>" + result);
             console.dir(result);
-            res.json(result);
+            res.send(result);
         })
         .catch(console.error())
 });
 
-// 수집형 포인트가 거심, 섬의 마음, 모코코씨앗, 위대한 미술품 인지 따라
-// url을 조절하여 getCollect호출 할 것.
+//id를 받지 않는 URL
+// router.get('/', (req, res) => {
+//     console.log('id안받음');
+//     userInfo.getUserInfo(req, res)
+//         .then((result) => {
+//             return new Promise(resolve => {
+//                 // console.log("getCollect>>>" + result);
+//                 //해당 수집품목들을 모아 반환
+//                 resolve(collect.getCollect(result))
+//             })
+//         })
+//         .then((result) => {
+//             console.log("collection>>>" + result);
+//             console.dir(result);
+//             //vue에 결과물 전달
+//             res.json(result);
+//         })
+//         .catch(console.error())
+// });
+
 
 
 module.exports = router;
