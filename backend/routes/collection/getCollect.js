@@ -18,6 +18,8 @@ exports.getCollect = (params) => {
                 //거인의 심장 div id
                 //lui-tab1-1
                 //거인의 심장, 섬의 마음, 모코코, 위대한 미술품
+                //heart, island, mococo, art
+                let fields = ['', 'heart', 'island', 'mococo', 'art'];
                 for (let idx = 1; idx < 5; ++idx) {
                     // for (let idx = 3; idx < 4; ++idx) {
                     let target = "#lui-tab1-" + idx;
@@ -29,11 +31,12 @@ exports.getCollect = (params) => {
                     // console.log(colArr[0].children[3].children[1]);
                     for (let i = 0; i < colArr.length; i++) {
                         var tJson = new Object();
-                        switch (idx) {
+                        switch (fields[idx]) {
                             //모코코의 경우 3번쨰에 존재함.
-                            case 3:
+                            case 'mococo':
                                 tJson.name = colArr[i].children[2].data.replace(/[\t\n]/gi, "");
                                 //모코코의 경우 children[3]에 모은 모코코의 정보가 보임
+                                //정규식 이용하여 \t와 \n 제거
                                 tJson.userCount = colArr[i].children[3].children[1].children[0].data.replace(/[\t\n]/gi, "");
                                 tJson.totalCount = colArr[i].children[3].children[3].children[0].data.replace(/[\t\n]/gi, "");
                                 break;
@@ -48,9 +51,24 @@ exports.getCollect = (params) => {
                         }
                         obj.push(tJson);
                     }
-                    jsonInfo[idx - 1] = obj;
-                    console.log(jsonInfo);
+                    switch (idx) {
+                        case 1:
+                            jsonInfo.heart = obj;
+                            break;
+                        case 2:
+                            jsonInfo.island = obj;
+                            break;
+                        case 3:
+                            jsonInfo.mococo = obj;
+                            break;
+                        case 4:
+                            jsonInfo.art = obj;
+                            break;
+                    }
+                    // jsonInfo[idx - 1] = obj;
                 }
+                console.log('불러온 json입니다?');
+                console.log(jsonInfo);
                 resolve2(jsonInfo);
             });
         });

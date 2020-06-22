@@ -10,10 +10,12 @@ var userInfo = require('./getUserInfo.js');
 router.get('/:id', (req, res) => {
     // console.log('id받았음.>>' + req.params.id);
     console.log('id받음');
-    userInfo.getUserInfo(req, res)
+    userInfo.getUserInfo(req, res, req.params.userid)
         .then((result) => {
+            console.log('유저 정보 헤더')
+            console.log(result)
             return new Promise(resolve => {
-                console.log("getCollect1>>>" + result);
+                console.log("getCollect1>>>");
                 resolve(collect.getCollect(result))
             })
         })
@@ -24,6 +26,7 @@ router.get('/:id', (req, res) => {
         })
         .catch(console.error())
 });
+
 
 //id를 받지 않는 URL
 // router.get('/', (req, res) => {

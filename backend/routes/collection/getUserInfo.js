@@ -7,10 +7,11 @@ const qs = require('querystring');
 
 var datas = {};
 
-exports.getUserInfo = (req, res) => {
+exports.getUserInfo = (req, res, tid) => {
     // let url = "https://lostark.game.onstove.com/Profile/Character/%EB%88%88%EA%BD%83%EC%B8%84%EB%A5%B4";
     //url인코딩 처리 위한 한글 escape처리
-    let url = `https://lostark.game.onstove.com/Profile/Character/${qs.escape(req.params.id)}`;
+    console.log('받은 아이디 >>>' + tid);
+    let url = `https://lostark.game.onstove.com/Profile/Character/${qs.escape(tid)}`;
 
     return new Promise(resolve => {
         request.get(url, function(error, response, body) {
