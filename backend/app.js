@@ -10,10 +10,9 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/db/users');
 const mariRouter = require('./routes/mari/mari');
-const collectionRouter = require('./routes/collection/collection');
-const heartsRouter = require('./routes/collection/heart');
+const collectionsRouter = require('./routes/db/collections');
 
 // Connect To MongoDB Server
 const port = process.env.PORT || 4500;
@@ -26,7 +25,7 @@ mongoose.connect(process.env.MONGO_URI, {
     })
     .then(() => console.log('Successfully connected to mongodb'))
     .catch(e => console.error(e));
-
+mongoose.set('useCreateIndex', true);
 var db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', function() {
@@ -60,10 +59,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/mari', mariRouter);
-app.use('/api/collection', collectionRouter);
 
-// 거인의 심장 정보 DB 테스트
-app.use('/api/hearts', heartsRouter);
+// 유저 수집품 정보 DB
+app.use('/api/collections', collectionsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

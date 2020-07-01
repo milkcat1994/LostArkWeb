@@ -68,7 +68,7 @@ exports.getCollect = (params) => {
                     // jsonInfo[idx - 1] = obj;
                 }
                 console.log('불러온 json입니다?');
-                console.log(jsonInfo);
+                // console.log(jsonInfo);
                 resolve2(jsonInfo);
             });
         });
