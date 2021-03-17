@@ -33,12 +33,8 @@ router.get('/user/:userid', (req, res) => {
     console.log(userid);
     Collections.findOneByUserid(userid)
         .then((collection) => {
-            if (!collection) {
-                // user에 대한 정보가 없으므로 
-                // /api/collection/인게임닉네임 으로 요청 보내고 받기
-                // req.url = '/api/collection/' + userid;
-                console.log('정보없어요')
-                userInfo.getUserInfo(req, res, userid)
+            // 해당 유저 정보로 찾을 예정
+            userInfo.getUserInfo(req, res, userid)
                     .then((result) => {
                         // result : ajax 요청 위한 user정보 Header
                         return new Promise(resolve => {
@@ -46,25 +42,47 @@ router.get('/user/:userid', (req, res) => {
                         })
                     })
                     .then((result) => {
-                        //해당 정보 DB에 저장하고 빠지기
                         let obj = new Object();
                         obj.collections = result;
                         obj.userid = userid;
-                        Collections.create(obj)
-                            .then((collection) => {
-                                res.json(collection);
-                                // res.send(obj);
-                            })
-                            .catch(err => res.status(500).send(err));
+                        // console.log(result)
+                        
+                        if (!collection) {
+                            // user에 대한 정보가 없으므로 
+                            // /api/collection/인게임닉네임 으로 요청 보내고 받기
+                            // req.url = '/api/collection/' + userid;
+            
+                            console.log('정보없어요')
+                                //해당 정보 DB에 저장하고 빠지기
+                            Collections.create(obj)
+                                .then((c) => {
+                                    res.json(c);
+                                    // res.send(obj);
+                                })
+                                .catch(err => {
+                                    res.status(500).send(err)
+                                    console.log('create 에러');
+                                    console.log(err);
+                                });
+                        } else {
+                            console.log('정보 있어요')
+                            // 유저 정보 업데이트
+                            Collections.updateByUserid(userid, obj)
+                                .then((c) => {
+                                    res.json(c)
+                                })
+                                .catch(err => {
+                                    res.status(500).send(err)
+                                    console.log('findOneAndUpdate 에러');
+                                    console.log(err);
+                                });
+                            // res.json(collection.collections);
+                        }
                     })
                     .catch(err => console.error(err))
-            } else {
-                console.log('정보 있어요')
-                res.json(collection.collections);
-            }
         })
         .catch(err => {
-            console.log('error 발생')
+            console.log('findOneByUserid error 발생')
             res.status(500).send(err)
 
         });
