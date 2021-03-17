@@ -32,7 +32,7 @@ exports.getCollect = (params) => {
                 fields.set(8, 'leaf');
                 
                 // let fields = ['', 'island', 'star', 'heart', 'art', 'mococo', 'adventure', 'ignea', 'leaf'];
-                for (let idx = 1; idx < fields.size; ++idx) {
+                for (let idx = 1; idx <= fields.size; ++idx) {
                     // for (let idx = 3; idx < 4; ++idx) {
                     let target = "#lui-tab1-" + idx;
                     let colArr = $(target).find(".list").children();
